@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/PUI2020/Final/my-app/static/css/main.1500b7d3.chunk.css",
-    "main.js": "/PUI2020/Final/my-app/static/js/main.61907e30.chunk.js",
-    "main.js.map": "/PUI2020/Final/my-app/static/js/main.61907e30.chunk.js.map",
-    "runtime-main.js": "/PUI2020/Final/my-app/static/js/runtime-main.c84a2a72.js",
-    "runtime-main.js.map": "/PUI2020/Final/my-app/static/js/runtime-main.c84a2a72.js.map",
-    "static/css/2.43b2b750.chunk.css": "/PUI2020/Final/my-app/static/css/2.43b2b750.chunk.css",
-    "static/js/2.86b4c8d5.chunk.js": "/PUI2020/Final/my-app/static/js/2.86b4c8d5.chunk.js",
-    "static/js/2.86b4c8d5.chunk.js.map": "/PUI2020/Final/my-app/static/js/2.86b4c8d5.chunk.js.map",
-    "index.html": "/PUI2020/Final/my-app/index.html",
-    "static/css/2.43b2b750.chunk.css.map": "/PUI2020/Final/my-app/static/css/2.43b2b750.chunk.css.map",
-    "static/css/main.1500b7d3.chunk.css.map": "/PUI2020/Final/my-app/static/css/main.1500b7d3.chunk.css.map",
-    "static/js/2.86b4c8d5.chunk.js.LICENSE.txt": "/PUI2020/Final/my-app/static/js/2.86b4c8d5.chunk.js.LICENSE.txt",
-    "static/media/noodlehead-red.9cb1acaf.jpg": "/PUI2020/Final/my-app/static/media/noodlehead-red.9cb1acaf.jpg"
+    "main.css": "/curry-index/static/css/main.1500b7d3.chunk.css",
+    "main.js": "/curry-index/static/js/main.aaa5989c.chunk.js",
+    "main.js.map": "/curry-index/static/js/main.aaa5989c.chunk.js.map",
+    "runtime-main.js": "/curry-index/static/js/runtime-main.5a33b625.js",
+    "runtime-main.js.map": "/curry-index/static/js/runtime-main.5a33b625.js.map",
+    "static/css/2.43b2b750.chunk.css": "/curry-index/static/css/2.43b2b750.chunk.css",
+    "static/js/2.a64146c4.chunk.js": "/curry-index/static/js/2.a64146c4.chunk.js",
+    "static/js/2.a64146c4.chunk.js.map": "/curry-index/static/js/2.a64146c4.chunk.js.map",
+    "index.html": "/curry-index/index.html",
+    "static/css/2.43b2b750.chunk.css.map": "/curry-index/static/css/2.43b2b750.chunk.css.map",
+    "static/css/main.1500b7d3.chunk.css.map": "/curry-index/static/css/main.1500b7d3.chunk.css.map",
+    "static/js/2.a64146c4.chunk.js.LICENSE.txt": "/curry-index/static/js/2.a64146c4.chunk.js.LICENSE.txt",
+    "static/media/noodlehead-red.9cb1acaf.jpg": "/curry-index/static/media/noodlehead-red.9cb1acaf.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c84a2a72.js",
+    "static/js/runtime-main.5a33b625.js",
     "static/css/2.43b2b750.chunk.css",
-    "static/js/2.86b4c8d5.chunk.js",
+    "static/js/2.a64146c4.chunk.js",
     "static/css/main.1500b7d3.chunk.css",
-    "static/js/main.61907e30.chunk.js"
+    "static/js/main.aaa5989c.chunk.js"
   ]
 }
