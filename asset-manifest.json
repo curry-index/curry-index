@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/curry-index/static/css/main.1500b7d3.chunk.css",
-    "main.js": "/curry-index/static/js/main.be5f4144.chunk.js",
-    "main.js.map": "/curry-index/static/js/main.be5f4144.chunk.js.map",
+    "main.css": "/curry-index/static/css/main.5f335f6b.chunk.css",
+    "main.js": "/curry-index/static/js/main.e2bcee83.chunk.js",
+    "main.js.map": "/curry-index/static/js/main.e2bcee83.chunk.js.map",
     "runtime-main.js": "/curry-index/static/js/runtime-main.39fb351b.js",
     "runtime-main.js.map": "/curry-index/static/js/runtime-main.39fb351b.js.map",
     "static/css/2.43b2b750.chunk.css": "/curry-index/static/css/2.43b2b750.chunk.css",
@@ -10,7 +10,7 @@
     "static/js/2.39aecd33.chunk.js.map": "/curry-index/static/js/2.39aecd33.chunk.js.map",
     "index.html": "/curry-index/index.html",
     "static/css/2.43b2b750.chunk.css.map": "/curry-index/static/css/2.43b2b750.chunk.css.map",
-    "static/css/main.1500b7d3.chunk.css.map": "/curry-index/static/css/main.1500b7d3.chunk.css.map",
+    "static/css/main.5f335f6b.chunk.css.map": "/curry-index/static/css/main.5f335f6b.chunk.css.map",
     "static/js/2.39aecd33.chunk.js.LICENSE.txt": "/curry-index/static/js/2.39aecd33.chunk.js.LICENSE.txt",
     "static/media/noodlehead-red.9cb1acaf.jpg": "/curry-index/static/media/noodlehead-red.9cb1acaf.jpg"
   },
@@ -18,7 +18,7 @@
     "static/js/runtime-main.39fb351b.js",
     "static/css/2.43b2b750.chunk.css",
     "static/js/2.39aecd33.chunk.js",
-    "static/css/main.1500b7d3.chunk.css",
-    "static/js/main.be5f4144.chunk.js"
+    "static/css/main.5f335f6b.chunk.css",
+    "static/js/main.e2bcee83.chunk.js"
   ]
 }
