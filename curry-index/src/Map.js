@@ -14,6 +14,7 @@ Geocode.setApiKey('AIzaSyAYZ0l37RYVyu6rfb-K6WEP1tbFrPfJmKM');
 const mapStyles = {
     width: '80%',
     height: '60%',
+    position: 'relative'
 };
 
 function loadCurryList() {
@@ -22,25 +23,25 @@ function loadCurryList() {
     return (unparsedCurryList && JSON.parse(unparsedCurryList))
 }
 
-function loadMarkerInfo(){
+function loadMarkerInfo() {
     let markersList = [];
-        for (let i = 0; i < loaded_curryList.length; i++) {
-            let curry = loaded_curryList[i];
+    for (let i = 0; i < loaded_curryList.length; i++) {
+        let curry = loaded_curryList[i];
 
-            Geocode.fromAddress(curry.restaurantAddress).then(
-                response => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    //   console.log("address: ", curry.restaurantAddress, " ", lat, lng);
-                    markersList.push(
-                        { latitude: lat, longitude: lng, name: curry.restaurantName }
-                    );
-                },
-                error => {
-                    console.error(error);
-                }
-            );
-        }
-        return markersList;
+        Geocode.fromAddress(curry.restaurantAddress).then(
+            response => {
+                const { lat, lng } = response.results[0].geometry.location;
+                //   console.log("address: ", curry.restaurantAddress, " ", lat, lng);
+                markersList.push(
+                    { latitude: lat, longitude: lng, name: curry.restaurantName }
+                );
+            },
+            error => {
+                console.error(error);
+            }
+        );
+    }
+    return markersList;
 }
 
 // Globals
@@ -67,25 +68,34 @@ class MapContainer extends Component {
         })
     }
 
-    markerClicked(restInfo){
-        document.getElementById("rest-name").innerHTML=restInfo.name;
+    markerClicked(restInfo) {
+        // Set restaurant name
+        for(var i=0; i < document.getElementsByClassName("rest-name").length; i++){
+            document.getElementsByClassName("rest-name")[i].innerHTML = restInfo.name;
+        }
+
+        // Set curry type
+        document.getElementById("curry-type")
     }
-    
+
     render() {
         return (
             <div id="bootstrap-overrides">
-                <div id="selected-restaurant">Selected restaurant: <span id="rest-name"><i>None selected</i></span></div>
-                <Map
-                    google={this.props.google}
-                    zoom={13}
-                    style={mapStyles}
-                    initialCenter={{ lat: 40.4406, lng: -79.9959 }}
-                >
-                    {this.displayMarkers()}
-                </Map>
+                <div id="selected-restaurant">Selected restaurant: <span className="rest-name"><i>None selected</i></span></div>
 
+                <div id="mapBox">
+                    <Map
+                        google={this.props.google}
+                        zoom={13}
+                        style={mapStyles}
+                        initialCenter={{ lat: 40.4406, lng: -79.9959 }}
+                    >
+                        {this.displayMarkers()}
+                    </Map>
+                </div>
                 <div id="selected-curry" className="mt-2 mt-md-2">
-                    hi
+                    <h2 class="rest-name"></h2>
+                    <h3 id="curry-type"></h3>
                 </div>
 
             </div>
