@@ -84,6 +84,10 @@ class MapContainer extends Component {
                     {this.displayMarkers()}
                 </Map>
 
+                <div id="selected-curry" className="mt-2 mt-md-2">
+                    hi
+                </div>
+
             </div>
         )
     }
