@@ -1,0 +1,11 @@
+#selected-restaurant{
+    margin-bottom: 13px;
+    
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 25px;
+}
+
+#rest-name{
+    font-weight: 400;
+}
