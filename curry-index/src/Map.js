@@ -25,6 +25,9 @@ function loadCurryList() {
 
 function loadMarkerInfo() {
     let markersList = [];
+    if(!loaded_curryList){
+        loaded_curryList = []
+    }
     for (let i = 0; i < loaded_curryList.length; i++) {
         let curry = loaded_curryList[i];
 
