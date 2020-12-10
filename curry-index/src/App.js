@@ -16,7 +16,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 function throwError(inputName) {
-    console.log(inputName, " is required.")
+    document.getElementById(inputName + "-label").style = "color: #dc3545; font-weight: 600";
 }
 
 function AddCurryModal(props) {
@@ -24,51 +24,54 @@ function AddCurryModal(props) {
         <Modal id="bootstrap-overrides"
             show={props.show}
             size="md"
+            backdrop="static"
             className="modal-add-curry"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
             <Form onSubmit={props.currySetter}>
-                <Modal.Body className="container">
-                    <h2>New Curry Entry</h2>
-                    <div className="row">
-                        <div className="col-8">
-                            <Form.Label className="mb-1">Restaurant</Form.Label><br />
-                            <Form.Control size="sm" name="restaurantName" type="text" placeholder="Name of Restaurant" />
-                            <br />
+                <Modal.Body className="container-fluid">
+                    <h2 className="mb-1">New Curry Entry</h2>
+                    <div className="sublabel">* Required field</div>
+                    <br />
+                    {/* <div className="row"> */}
+                    {/* <div className="col-8"> */}
+                    <Form.Label id="restaurantName-label" className="mb-1">Restaurant*</Form.Label><br />
+                    <Form.Control size="sm" name="restaurantName" type="text" placeholder="Name of Restaurant" />
+                    <br />
 
-                            <Form.Label className="mb-1">Full Address of Restaurant</Form.Label>
-                            <Form.Control size="sm" name="restaurantAddress" type="text" placeholder='e.g. "123 Thai St, Pittsburgh, PA"' />
-                            <br />
+                    <Form.Label id="restaurantAddress-label" className="mb-1">Full Address of Restaurant*</Form.Label>
+                    <Form.Control size="sm" name="restaurantAddress" type="text" placeholder='e.g. "123 Thai St, Pittsburgh, PA"' />
+                    <br />
 
-                            <div className="container p-0">
-                                <div className="row">
-                                    <div className="col-8">
-                                        <Form.Label className="mb-0">Curry Name</Form.Label>
-                                        <br /><span className="sublabel">Include "curry" in name</span>
-                                        <Form.Control size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
-                                    </div>
-                                    <div className="col-4">
-                                        <Form.Label className="mb-0">Rating</Form.Label>
-                                        <br /><span className="sublabel">1=worst, 5=best</span>
-                                        <Form.Control size="sm" name="curryRating" type="text" placeholder="1-5" />
-                                    </div>
-                                </div>
+                    <div className="container p-0">
+                        <div className="row">
+                            <div className="col-8">
+                                <Form.Label id="curryType-label" className="mb-0">Curry Name*</Form.Label>
+                                <br /><span className="sublabel">Include "curry" in name</span>
+                                <Form.Control size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
                             </div>
-
-                            <br />
-                            <Form.Label className="mb-1">Taste Notes</Form.Label>
-                            <Form.Control as="textarea" name="tastingNotes" placeholder="Taste description of curry" rows={3} />
-
+                            <div className="col-4">
+                                <Form.Label id="curryRating-label" className="mb-0">Rating*</Form.Label>
+                                <br /><span className="sublabel">1=worst, 5=best</span>
+                                <Form.Control size="sm" name="curryRating" type="text" placeholder="1-5" />
+                            </div>
                         </div>
+                    </div>
 
-                        <div className="col-4">
+                    <br />
+                    <Form.Label id="tastingNotes-label" className="mb-1">Taste Notes</Form.Label>
+                    <Form.Control as="textarea" name="tastingNotes" placeholder="Taste description of curry" rows={3} />
+
+                    {/* </div> */}
+
+                    {/* <div className="col-4">
                             <Form.Group>
                                 <Form.Label className="mb-1">Add a Photo</Form.Label>
                                 <Form.File name="curryPhoto" id="exampleFormControlFile1" />
                             </Form.Group>
-                        </div>
-                    </div>
+                        </div> */}
+                    {/* </div> */}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="outline-secondary" size="sm" onClick={props.onHide}>Close</Button>
@@ -131,7 +134,8 @@ class App extends Component {
             //Using || for backup assignment if no curryList in storage
             curryList: loaded_curryList || [],
             newCurryContent: "",
-            modalShow: false
+            modalShow: false,
+            curryFalling: false,
         };
     }
 
@@ -142,14 +146,23 @@ class App extends Component {
     addItem = (e) => {
         e.preventDefault();
         // Error checker: make sure all input values are filled (except excluded inputs if any)
-        let excludedInputs = "curryPhoto tastingNotes";
+        let excludedInputs = "tastingNotes";
 
         let error = false;
         // Go through each input field and make sure it's not empty
         for (var i = 0; i < e.target.elements.length - 2; i++) {
-            if (e.target[i].value === "" && !excludedInputs.includes(e.target[i].name)) {
-                throwError(e.target[i].name);
-                error = true;
+            if (e.target[i].value === "") {
+                if (!excludedInputs.includes(e.target[i].name)) {
+                    throwError(e.target[i].name);
+                    error = true;
+                }
+                else if (excludedInputs.includes(e.target[i].name)) {
+                    e.target[i].value = "None"
+                }
+            }
+            else if (document.getElementById(e.target[i].name + "-label").style.color !== "#212529") {
+                document.getElementById(e.target[i].name + "-label").style.color = "#212529";
+                document.getElementById(e.target[i].name + "-label").style.fontWeight = "400"
             }
         }
         if (error === true) {
@@ -169,6 +182,9 @@ class App extends Component {
 
         // close modal
         this.setModalShow(false);
+
+        // Start animation: Falling curry bowls
+        this.setState({ curryFalling: true });
     };
 
     deleteItem = (event, i) => {
@@ -185,7 +201,7 @@ class App extends Component {
 
     render() {
         let curriesInIndex = [];
-        if (this.state.curryList != null) {
+        if (this.state.curryList !== null) {
             for (let i = 0; i < this.state.curryList.length; i++) {
                 let curry = this.state.curryList[i];
                 curriesInIndex.push(
@@ -202,7 +218,22 @@ class App extends Component {
 
         return (
             <div id="bootstrap-overrides">
-                {/* Curry Index: List of curries */ }
+                { this.state.curryFalling &&
+                    <span className="falling-curry container">
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                        <span className="fallingLeaves"></span>
+                    </span>
+                }
+                {/* Curry Index: List of curries */}
                 <div className="header pb-0 pb-md-3">
                     <h1 className="mb-0">Saved Curries</h1>
                     <span className="link-like-span" onClick={() => this.setModalShow(true)}>

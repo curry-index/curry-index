@@ -1,10 +1,20 @@
 /* Logo styling */
 #overrides .navbar-brand {
     font-family: "Avenir";
-    font-size: 40px;
     font-weight: 300;
+    font-size: 24px;
     letter-spacing: 0.205em;
     color: #000;
+}
+
+@media (min-width: 992px) {
+    #overrides .navbar-brand {
+        font-size: 40px;
+    }
+}
+
+nav{
+    z-index: 2;
 }
 
 /* Nav links */

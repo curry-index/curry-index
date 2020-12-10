@@ -72,6 +72,8 @@ class MapContainer extends Component {
     }
 
     markerClicked(restInfo) {
+        document.getElementById("selected-restaurant").innerHTML="Selected restaurant: <span className='rest-name'></span>";
+        
         // Set restaurant name
         for(var i=0; i < document.getElementsByClassName("rest-name").length; i++){
             document.getElementsByClassName("rest-name")[i].innerHTML = restInfo.name;
@@ -84,7 +86,8 @@ class MapContainer extends Component {
     render() {
         return (
             <div id="bootstrap-overrides">
-                <div id="selected-restaurant">Selected restaurant: <span className="rest-name"><i>None selected</i></span></div>
+                <div id="selected-restaurant">
+                    Select a Pinned Thai Curry Restaurant</div>
 
                 <div id="mapBox">
                     <Map
