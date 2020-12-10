@@ -1,3 +1,8 @@
+// Questions
+// Making images work in react by src link without import?
+//    - need this to add custom images
+// Make maps update without manual refresh?
+
 // Modules
 import React, { Component } from "react";
 import Modal from 'react-bootstrap/Modal';
@@ -5,14 +10,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import noodleheadRed from './noodlehead-red.jpg';
-
-// import {
-//     BrowserRouter as Router,
-//     Switch,
-//     Route,
-//     Link
-// } from "react-router-dom";
-// import Map from "./Map";
 
 // CSS
 import './index.css';
@@ -25,9 +22,9 @@ function throwError(inputName) {
 function AddCurryModal(props) {
     return (
         <Modal id="bootstrap-overrides"
-            // {...props}
             show={props.show}
-            size="lg"
+            size="md"
+            className="modal-add-curry"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -128,12 +125,15 @@ class Curry extends React.Component {
 }
 
 class App extends Component {
-    state = {
-        //Using || for backup assignment if no curryList in storage
-        curryList: loaded_curryList || [],
-        newCurryContent: "",
-        modalShow: false
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            //Using || for backup assignment if no curryList in storage
+            curryList: loaded_curryList || [],
+            newCurryContent: "",
+            modalShow: false
+        };
+    }
 
     renderCurryItem(restaurant, curryType, tastingNotes, rating, i) {
         return <Curry restaurant={restaurant} curry={curryType} tastingNotes={tastingNotes} rating={rating} i={i} key={i} deleteItem={this.deleteItem} />;
@@ -205,9 +205,9 @@ class App extends Component {
                 {/* Curry Index: List of curries */ }
                 <div className="header pb-0 pb-md-3">
                     <h1 className="mb-0">Saved Curries</h1>
-                    <a href="#add" onClick={() => this.setModalShow(true)}>
+                    <span className="link-like-span" onClick={() => this.setModalShow(true)}>
                         <u>+ Add New Curry</u>
-                    </a>
+                    </span>
                 </div>
 
                 <div className="row">
