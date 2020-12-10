@@ -11,12 +11,12 @@ class Nav extends Component {
     render() {
         return (
             <nav id="overrides" className="navbar mb-5 px-0">
-                <Link to="/" className="navbar-brand">Custom Curry Index</Link>
+                <Link to="/" replace className="navbar-brand">Custom Curry Index</Link>
 
                 <div className="navbar-nav flex-row">
-                    <NavLink to="/" className="nav-item nav-link px-1 mr-2">Curry Index</NavLink>
+                    <NavLink to="/" replace className="nav-item nav-link px-1 mr-2">Curry Index</NavLink>
 
-                    <NavLink to="/map" className="nav-item nav-link px-1 mx-2">Map</NavLink>
+                    <NavLink to="/map" replace className="nav-item nav-link px-1 mx-2">Map</NavLink>
                 </div>
             </nav>
         )

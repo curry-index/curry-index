@@ -96,10 +96,10 @@ class MapContainer extends Component {
                         {this.displayMarkers()}
                     </Map>
                 </div>
-                <div id="selected-curry" className="mt-2 mt-md-2">
-                    <h2 class="rest-name"></h2>
-                    <h3 id="curry-type"></h3>
-                </div>
+                {/* <div id="selected-curry" className="mt-2 mt-md-2"> */}
+                    {/* <h2 className="rest-name"></h2> */}
+                    {/* <h3 id="curry-type"></h3> */}
+                {/* </div> */}
 
             </div>
         )
