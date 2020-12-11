@@ -10,6 +10,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
+import ImageUploader from 'react-images-upload';
 import noodleheadRed from './noodlehead-red.jpg';
 // import curryBowl from './currybowl.png';
 
@@ -37,36 +38,36 @@ function AddCurryModal(props) {
                     <div className="sublabel req">* Required field</div>
                     <br />
                     {/* <div className="row"> */}
-                        {/* <div className="col-8"> */}
-                            <Form.Label id="restaurantName-label" className="mb-1">Restaurant*</Form.Label><br />
-                            <Form.Control autoComplete="off" size="sm" name="restaurantName" type="text" placeholder="Name of Restaurant" />
-                            <br />
+                    {/* <div className="col-8"> */}
+                    <Form.Label id="restaurantName-label" className="mb-1">Restaurant*</Form.Label><br />
+                    <Form.Control autoComplete="off" size="sm" name="restaurantName" type="text" placeholder="Name of Restaurant" />
+                    <br />
 
-                            <Form.Label id="restaurantAddress-label" className="mb-1">Full Address of Restaurant*</Form.Label>
-                            <br /><span className="sublabel">Can also write as "Restaurant name, City, State"</span>
-                            <Form.Control autoComplete="off" size="sm" name="restaurantAddress" type="text" placeholder='e.g. "123 Thai St, Pittsburgh, PA"' />
-                            <br />
+                    <Form.Label id="restaurantAddress-label" className="mb-1">Full Address of Restaurant*</Form.Label>
+                    <br /><span className="sublabel">Can also write as "Restaurant name, City, State"</span>
+                    <Form.Control autoComplete="off" size="sm" name="restaurantAddress" type="text" placeholder='e.g. "123 Thai St, Pittsburgh, PA"' />
+                    <br />
 
-                            <div className="container p-0">
-                                <div className="row">
-                                    <div className="col-8">
-                                        <Form.Label id="curryType-label" className="mb-0">Curry Name*</Form.Label>
-                                        <br /><span className="sublabel">Include "curry" in name</span>
-                                        <Form.Control autoComplete="off" size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
-                                    </div>
-                                    <div className="col-4">
-                                        <Form.Label id="curryRating-label" className="mb-0">Rating*</Form.Label>
-                                        <br /><span className="sublabel">1=worst, 5=best</span>
-                                        <Form.Control autoComplete="off" size="sm" name="curryRating" type="text" placeholder="1-5" />
-                                    </div>
-                                </div>
+                    <div className="container p-0">
+                        <div className="row">
+                            <div className="col-8">
+                                <Form.Label id="curryType-label" className="mb-0">Curry Name*</Form.Label>
+                                <br /><span className="sublabel">Include "curry" in name</span>
+                                <Form.Control autoComplete="off" size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
                             </div>
+                            <div className="col-4">
+                                <Form.Label id="curryRating-label" className="mb-0">Rating*</Form.Label>
+                                <br /><span className="sublabel">1=worst, 5=best</span>
+                                <Form.Control autoComplete="off" size="sm" name="curryRating" type="text" placeholder="1-5" />
+                            </div>
+                        </div>
+                    </div>
 
-                            <br />
-                            <Form.Label id="tastingNotes-label" className="mb-1">Taste Notes</Form.Label>
-                            <Form.Control as="textarea" name="tastingNotes" placeholder="Taste description of curry" rows={3} />
+                    <br />
+                    <Form.Label id="tastingNotes-label" className="mb-1">Taste Notes</Form.Label>
+                    <Form.Control as="textarea" name="tastingNotes" placeholder="Taste description of curry" rows={3} />
 
-                        {/* </div>
+                    {/* </div>
 
                         <div className="col-4">
                             <Form.Group>
@@ -139,7 +140,15 @@ class App extends Component {
             modalShow: false,
             curryFalling: false,
             // uploadedImage: undefined
-        };
+            pictures: []
+        }
+        this.onDrop = this.onDrop.bind(this);
+    }
+
+    onDrop(pictureFiles, pictureDataURLs) {
+        this.setState({
+            pictures: pictureFiles
+        });
     }
 
     renderCurryItem(restaurant, curryType, tastingNotes, rating, i) {
@@ -251,6 +260,13 @@ class App extends Component {
                     <span className="link-like-span" onClick={() => this.setModalShow(true)}>
                         <u>+ Add New Curry</u>
                     </span>
+                    <ImageUploader
+                        withIcon={true}
+                        buttonText='Choose images'
+                        onChange={this.onDrop}
+                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                        maxFileSize={5242880}
+                    />
                 </div>
 
                 <div className="row">
@@ -260,7 +276,7 @@ class App extends Component {
                     show={this.state.modalShow}
                     onHide={() => this.setModalShow(false)}
                     currySetter={this.addItem}
-                    // handleImageUpload={this.handleImageUpload}
+                // handleImageUpload={this.handleImageUpload}
                 />
             </div >
         );
