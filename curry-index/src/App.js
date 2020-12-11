@@ -1,18 +1,11 @@
-// Questions
-// Making images work in react by src link without import?
-//    - need this to add custom images
 // Make maps update without manual refresh?
-// Upload image: https://dev.to/asimdahall/client-side-image-upload-in-react-5ffc
 
 // Modules
 import React, { Component } from "react";
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-import ImageUploader from 'react-images-upload';
-import noodleheadRed from './noodlehead-red.jpg';
-// import curryBowl from './currybowl.png';
+import AddCurryModal from './AddCurryModal';
+// import noodleheadRed from './noodlehead-red.jpg';
+import curryBowl from './currybowllg.svg';
 
 // CSS
 import './index.css';
@@ -20,71 +13,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 function throwError(inputName) {
     document.getElementById(inputName + "-label").style = "color: #dc3545; font-weight: 600";
-}
-
-function AddCurryModal(props) {
-    return (
-        <Modal id="bootstrap-overrides"
-            show={props.show}
-            size="md"
-            backdrop="static"
-            className="modal-add-curry"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Form onSubmit={props.currySetter}>
-                <Modal.Body className="container-fluid">
-                    <h2 className="mb-1">New Curry Entry</h2>
-                    <div className="sublabel req">* Required field</div>
-                    <br />
-                    {/* <div className="row"> */}
-                    {/* <div className="col-8"> */}
-                    <Form.Label id="restaurantName-label" className="mb-1">Restaurant*</Form.Label><br />
-                    <Form.Control autoComplete="off" size="sm" name="restaurantName" type="text" placeholder="Name of Restaurant" />
-                    <br />
-
-                    <Form.Label id="restaurantAddress-label" className="mb-1">Full Address of Restaurant*</Form.Label>
-                    <br /><span className="sublabel">Can also write as "Restaurant name, City, State"</span>
-                    <Form.Control autoComplete="off" size="sm" name="restaurantAddress" type="text" placeholder='e.g. "123 Thai St, Pittsburgh, PA"' />
-                    <br />
-
-                    <div className="container p-0">
-                        <div className="row">
-                            <div className="col-8">
-                                <Form.Label id="curryType-label" className="mb-0">Curry Name*</Form.Label>
-                                <br /><span className="sublabel">Include "curry" in name</span>
-                                <Form.Control autoComplete="off" size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
-                            </div>
-                            <div className="col-4">
-                                <Form.Label id="curryRating-label" className="mb-0">Rating*</Form.Label>
-                                <br /><span className="sublabel">1=worst, 5=best</span>
-                                <Form.Control autoComplete="off" size="sm" name="curryRating" type="text" placeholder="1-5" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <br />
-                    <Form.Label id="tastingNotes-label" className="mb-1">Taste Notes</Form.Label>
-                    <Form.Control as="textarea" name="tastingNotes" placeholder="Taste description of curry" rows={3} />
-
-                    {/* </div>
-
-                        <div className="col-4">
-                            <Form.Group>
-                                <Form.Label className="mb-1">Add a Photo</Form.Label>
-                                <Form.File multiple={false} onChange={props.handleImageUpload} name="curryPhoto" id="exampleFormControlFile1" />
-                            </Form.Group>
-                        </div>
-                    </div> */}
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="outline-secondary" size="sm" onClick={props.onHide}>Close</Button>
-                    <Button variant="primary" type="submit" size="sm">Save</Button>
-                </Modal.Footer>
-            </Form>
-        </Modal>
-    );
 }
 
 // Store curry list in local storage
@@ -109,7 +37,7 @@ class Curry extends React.Component {
                 <div className="mt-4 mt-sm-auto">
                     <div className="row">
                         <div className="col-12 col-md-7 col-lg-6">
-                            <Image alt="curry" src={noodleheadRed} className="card-images" />
+                            <Image alt="curry" src={this.props.pic} className="card-images" />
                         </div>
                         <div className="col-12 col-md-5 col-lg-6">
                             <h2 className="mb-0 mt-2 mt-md-0 curry-card-title">{this.props.restaurant}</h2>
@@ -139,7 +67,6 @@ class App extends Component {
             newCurryContent: "",
             modalShow: false,
             curryFalling: false,
-            // uploadedImage: undefined
             pictures: []
         }
         this.onDrop = this.onDrop.bind(this);
@@ -147,22 +74,13 @@ class App extends Component {
 
     onDrop(pictureFiles, pictureDataURLs) {
         this.setState({
-            pictures: pictureFiles
+            pictures: pictureDataURLs
         });
     }
 
-    renderCurryItem(restaurant, curryType, tastingNotes, rating, i) {
-        return <Curry restaurant={restaurant} curry={curryType} tastingNotes={tastingNotes} rating={rating} i={i} key={i} deleteItem={this.deleteItem} />
+    renderCurryItem(restaurant, curryType, tastingNotes, rating, pict, i) {
+        return <Curry restaurant={restaurant} curry={curryType} tastingNotes={tastingNotes} rating={rating} i={i} key={i} deleteItem={this.deleteItem} pic={pict} />
     }
-
-    // handleImageUpload = (e) => {
-    //     const imgg = React.useRef(null);
-    //     this.setState({uploadedImage: imgg});
-    //     const [file] = e.target.files;
-    //     if (file) {
-    //       console.log(file);
-    //     }
-    // }
 
     addItem = (e) => {
         e.preventDefault();
@@ -170,7 +88,7 @@ class App extends Component {
         let excludedInputs = "tastingNotes";
         let error = false;
         // Go through each input field and make sure it's not empty
-        for (var i = 0; i < e.target.elements.length - 3; i++) {
+        for (var i = 0; i < 5; i++) {
             if (e.target[i].value === "" && !excludedInputs.includes(e.target[i].name)) {
                 throwError(e.target[i].name);
                 error = true;
@@ -188,13 +106,19 @@ class App extends Component {
         let currCurryList = this.state.curryList;
 
         let newCurry = {};
-        for (i = 0; i < e.target.elements.length - 2; i++) {
+        for (i = 0; i < 5; i++) {
             // If optional inputs empty, fill with "None"
             if (excludedInputs.includes(e.target[i].name) && e.target[i].value === "") {
                 e.target[i].value = "N/A"
             }
 
             newCurry[e.target.elements[i].name] = e.target[i].value;
+        }
+        if(this.state.pictures.length === 0){
+            newCurry["pic"] = curryBowl
+        }
+        else{
+            newCurry["pic"] = this.state.pictures;
         }
 
         currCurryList.push(newCurry)
@@ -217,6 +141,12 @@ class App extends Component {
     };
 
     setModalShow(bool) {
+        // on open, reset picture stored for upload so no repeats if someone doesn't upload one
+        if(bool === true){
+            this.setState({
+                pictures:[]
+            })
+        }
         this.setState({ modalShow: bool });
     }
 
@@ -231,6 +161,7 @@ class App extends Component {
                         curry.curryType,
                         curry.tastingNotes,
                         curry.curryRating,
+                        curry.pic,
                         i
                     )
                 );
@@ -258,15 +189,8 @@ class App extends Component {
                 <div className="header pb-0 pb-md-3">
                     <h1 className="mb-0">Saved Curries</h1>
                     <span className="link-like-span" onClick={() => this.setModalShow(true)}>
-                        <u>+ Add New Curry</u>
+                        + Add New Curry
                     </span>
-                    <ImageUploader
-                        withIcon={true}
-                        buttonText='Choose images'
-                        onChange={this.onDrop}
-                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                        maxFileSize={5242880}
-                    />
                 </div>
 
                 <div className="row">
@@ -276,7 +200,7 @@ class App extends Component {
                     show={this.state.modalShow}
                     onHide={() => this.setModalShow(false)}
                     currySetter={this.addItem}
-                // handleImageUpload={this.handleImageUpload}
+                    onDrop ={this.onDrop}
                 />
             </div >
         );
