@@ -37,7 +37,7 @@ function AddCurryModal(props) {
                     {/* <div className="row"> */}
                     {/* <div className="col-8"> */}
                     <Form.Label id="restaurantName-label" className="mb-1">Restaurant*</Form.Label><br />
-                    <Form.Control size="sm" name="restaurantName" type="text" placeholder="Name of Restaurant" />
+                    <Form.Control size="sm" name="restaurantName" value="Name" type="text" placeholder="Name of Restaurant" />
                     <br />
 
                     <Form.Label id="restaurantAddress-label" className="mb-1">Full Address of Restaurant*</Form.Label>
@@ -49,12 +49,12 @@ function AddCurryModal(props) {
                             <div className="col-8">
                                 <Form.Label id="curryType-label" className="mb-0">Curry Name*</Form.Label>
                                 <br /><span className="sublabel">Include "curry" in name</span>
-                                <Form.Control size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
+                                <Form.Control value="Red curry" size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
                             </div>
                             <div className="col-4">
                                 <Form.Label id="curryRating-label" className="mb-0">Rating*</Form.Label>
                                 <br /><span className="sublabel">1=worst, 5=best</span>
-                                <Form.Control size="sm" name="curryRating" type="text" placeholder="1-5" />
+                                <Form.Control value="4" size="sm" name="curryRating" type="text" placeholder="1-5" />
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,6 @@ class Curry extends React.Component {
                 <div className="mt-4 mt-sm-auto">
                     <div className="row">
                         <div className="col-12 col-md-7 col-lg-6">
-                            {/* <Image alt="curry" src={require("./noodlehead-red.jpg")} /> */}
                             <Image alt="curry" src={noodleheadRed} className="card-images" />
                         </div>
                         <div className="col-12 col-md-5 col-lg-6">
@@ -116,7 +115,6 @@ class Curry extends React.Component {
                             </p>
 
                             <span className="delete-btn" onClick={(e) => this.props.deleteItem(e, this.props.i)}>
-                                {/* <span onClick={() => deleteCurry()} className="delete-btn"> */}
                                 Delete
                             </span>
                         </div>
@@ -151,14 +149,9 @@ class App extends Component {
         let error = false;
         // Go through each input field and make sure it's not empty
         for (var i = 0; i < e.target.elements.length - 2; i++) {
-            if (e.target[i].value === "") {
-                if (!excludedInputs.includes(e.target[i].name)) {
-                    throwError(e.target[i].name);
-                    error = true;
-                }
-                else if (excludedInputs.includes(e.target[i].name)) {
-                    e.target[i].value = "None"
-                }
+            if (e.target[i].value === "" && !excludedInputs.includes(e.target[i].name)) {
+                throwError(e.target[i].name);
+                error = true;
             }
             else if (document.getElementById(e.target[i].name + "-label").style.color !== "#212529") {
                 document.getElementById(e.target[i].name + "-label").style.color = "#212529";
@@ -173,6 +166,11 @@ class App extends Component {
 
         let newCurry = {};
         for (i = 0; i < e.target.elements.length - 2; i++) {
+            // If optional inputs empty, fill with "None"
+            if (excludedInputs.includes(e.target[i].name) && e.target[i].value === "") {
+                e.target[i].value = "N/A"
+            }
+
             newCurry[e.target.elements[i].name] = e.target[i].value;
         }
 
@@ -220,7 +218,7 @@ class App extends Component {
             <div id="bootstrap-overrides">
                 { this.state.curryFalling &&
                     <span className="falling-curry container">
-                        <span className="fallingLeaves"></span>
+                        <span onAnimationEnd={() => this.setState({curryFalling: false})} className="fallingLeaves"></span>
                         <span className="fallingLeaves"></span>
                         <span className="fallingLeaves"></span>
                         <span className="fallingLeaves"></span>

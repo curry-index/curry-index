@@ -57,7 +57,8 @@ class MapContainer extends Component {
 
         this.state = {
             curryList: loaded_curryList || [],
-            restaurants: loaded_markerInfo || []
+            restaurants: loaded_markerInfo || [],
+            markerSelected: false
         }
     }
 
@@ -72,7 +73,9 @@ class MapContainer extends Component {
     }
 
     markerClicked(restInfo) {
-        document.getElementById("selected-restaurant").innerHTML="Selected restaurant: <span className='rest-name'></span>";
+        console.log("hi")
+        this.setState({markerSelected: true});
+        document.getElementById("instrucs").innerHTML="Selected restaurant: ";
         
         // Set restaurant name
         for(var i=0; i < document.getElementsByClassName("rest-name").length; i++){
@@ -87,9 +90,10 @@ class MapContainer extends Component {
         return (
             <div id="bootstrap-overrides">
                 <div id="selected-restaurant">
-                    Select a Pinned Thai Curry Restaurant</div>
+                    <span id="instrucs">Select a Pinned Thai Curry Restaurant</span> <span className='rest-name'></span>
+                </div>
 
-                <div id="mapBox">
+                <div id="map-box">
                     <Map
                         google={this.props.google}
                         zoom={13}
@@ -99,10 +103,23 @@ class MapContainer extends Component {
                         {this.displayMarkers()}
                     </Map>
                 </div>
-                {/* <div id="selected-curry" className="mt-2 mt-md-2"> */}
-                    {/* <h2 className="rest-name"></h2> */}
-                    {/* <h3 id="curry-type"></h3> */}
-                {/* </div> */}
+                <div id="selected-curry" className="mt-2 mt-md-2">
+                    <div className="row">
+                        <div className="col-3">
+                            <span id="ranking">#1</span>
+                        </div>
+                        <div className="col mt-3">
+                            <h2 className="rest-name">Name</h2>
+                            <h3 id="curry-type">Type</h3>
+                        </div>
+                    </div>
+                    <br />
+                    Taste notes: <span id="taste-notes"></span>
+                    <br />
+                    Rating: <span id="rate"></span>/5
+
+
+                </div>
 
             </div>
         )

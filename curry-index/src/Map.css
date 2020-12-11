@@ -1,19 +1,29 @@
-#selected-restaurant{
+#selected-restaurant {
     margin-bottom: 13px;
-    
     font-size: 18px;
     font-weight: 800;
     line-height: 25px;
 }
 
-.rest-name{
+.rest-name {
     font-weight: 400;
 }
 
-.fw-800{
+.fw-800 {
     font-weight: 800;
 }
 
-.fw-500{
+.fw-500 {
     font-weight: 500;
+}
+
+#selected-curry {
+    padding-top: 0%;
+    width: 50%;
+}
+
+#ranking {
+    font-size: 58px;
+    font-weight: 500;
+    text-align: left;
 }
