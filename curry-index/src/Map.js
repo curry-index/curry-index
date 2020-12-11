@@ -73,7 +73,6 @@ class MapContainer extends Component {
             restaurants: loaded_markerInfo || [],
             markerSelected: false,
             modalShow: false,
-            curryFalling: false,
             pictures: []
         }
         this.onDrop = this.onDrop.bind(this);
@@ -109,7 +108,7 @@ class MapContainer extends Component {
         for (var i = 0; i < document.getElementsByClassName("rest-name").length; i++) {
             document.getElementsByClassName("rest-name")[i].innerHTML = restInfo.name;
         }
-
+        
         // Set curry type
         document.getElementById("curry-img").src = this.state.curryList[index].pic;
 
@@ -120,8 +119,6 @@ class MapContainer extends Component {
         document.getElementById("taste-notes").innerHTML = this.state.curryList[index].tastingNotes;
 
         document.getElementById("rate").innerHTML = this.state.curryList[index].curryRating;
-
-
     }
 
     setModalShow(bool) {
@@ -173,35 +170,19 @@ class MapContainer extends Component {
             newCurry["pic"] = this.state.pictures;
         }
 
-        currCurryList.push(newCurry)
+        currCurryList.push(newCurry);
         this.setState({ curryList: currCurryList });
-        store(currCurryList)
+        store(currCurryList);
 
         // close modal
         this.setModalShow(false);
 
-        // Start animation: Falling curry bowls
-        this.setState({ curryFalling: true });
+        window.location.reload()
     }
 
     render() {
         return (
             <div id="bootstrap-overrides">
-                { this.state.curryFalling &&
-                    <span className="falling-curry container">
-                        <span onAnimationEnd={() => this.setState({ curryFalling: false })} className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                        <span className="fallingLeaves"></span>
-                    </span>
-                }
                 <div id="selected-restaurant">
                     <span id="instrucs">Select a Pinned Thai Curry Restaurant</span> <span className='rest-name'></span>
                     <br />
