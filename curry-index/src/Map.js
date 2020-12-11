@@ -4,6 +4,8 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import Geocode from "react-geocode";
+import Image from 'react-bootstrap/Image';
+import noodleheadRed from './noodlehead-red.jpg';
 
 // CSS
 import './Map.css';
@@ -13,7 +15,7 @@ Geocode.setApiKey('AIzaSyAYZ0l37RYVyu6rfb-K6WEP1tbFrPfJmKM');
 
 const mapStyles = {
     width: '80%',
-    height: '60%',
+    height: '330px',
     position: 'relative'
 };
 
@@ -25,7 +27,7 @@ function loadCurryList() {
 
 function loadMarkerInfo() {
     let markersList = [];
-    if(!loaded_curryList){
+    if (!loaded_curryList) {
         loaded_curryList = []
     }
     for (let i = 0; i < loaded_curryList.length; i++) {
@@ -64,26 +66,41 @@ class MapContainer extends Component {
 
     displayMarkers = () => {
         return this.state.restaurants.map((rest, index) => {
-            return <Marker key={rest.name + "_" + index} id={index} position={{
-                lat: rest.latitude,
-                lng: rest.longitude
-            }}
-                onClick={() => this.markerClicked(rest)} />
+            return <Marker
+                    key={rest.name + "_" + index}
+                    id={index}
+                    position={{
+                        lat: rest.latitude,
+                        lng: rest.longitude
+                    }}
+                    icon = {{url: "http://maps.google.com/mapfiles/kml/pal2/icon41.png"}}
+                    onClick={() => this.markerClicked(rest, index)} />
         })
     }
 
-    markerClicked(restInfo) {
-        console.log("hi")
-        this.setState({markerSelected: true});
-        document.getElementById("instrucs").innerHTML="Selected restaurant: ";
-        
+    markerClicked(restInfo, index) {
+        this.setState({ markerSelected: true });
+
+        // open infowindow.open(map, marker);
+        document.getElementById("instrucs").innerHTML = "Selected restaurant: ";
+
         // Set restaurant name
-        for(var i=0; i < document.getElementsByClassName("rest-name").length; i++){
+        for (var i = 0; i < document.getElementsByClassName("rest-name").length; i++) {
             document.getElementsByClassName("rest-name")[i].innerHTML = restInfo.name;
         }
 
+        console.log(this.state.curryList)
+
         // Set curry type
-        document.getElementById("curry-type")
+        document.getElementById("ranking").innerHTML = "#" + (index + 1);
+
+        document.getElementById("curry-type").innerHTML = this.state.curryList[index].curryType;
+
+        document.getElementById("taste-notes").innerHTML = this.state.curryList[index].tastingNotes;
+
+        document.getElementById("rate").innerHTML = this.state.curryList[index].curryRating;
+
+
     }
 
     render() {
@@ -98,28 +115,35 @@ class MapContainer extends Component {
                         google={this.props.google}
                         zoom={13}
                         style={mapStyles}
-                        initialCenter={{ lat: 40.4406, lng: -79.9959 }}
+                        initialCenter={{ lat: 40.4476, lng: -79.9809 }}
                     >
                         {this.displayMarkers()}
                     </Map>
                 </div>
-                <div id="selected-curry" className="mt-2 mt-md-2">
-                    <div className="row">
-                        <div className="col-3">
-                            <span id="ranking">#1</span>
-                        </div>
-                        <div className="col mt-3">
-                            <h2 className="rest-name">Name</h2>
-                            <h3 id="curry-type">Type</h3>
+
+                <div id="notice">Note: if map doesn't update or show markers, and curries in index, refresh page</div>
+
+                { this.state.markerSelected &&
+                    <div id="selected-curry" className="mt-2 mt-md-2">
+                        <Image alt="curry" src={noodleheadRed} className="selected-curry-image left-fl mr-4" />
+                        <div className="left-fl">
+                            <span className="left-fl">
+                                <span id="ranking">#1</span>
+                            </span>
+
+                            <span className="left-fl mt-3">
+                                <h2 className="rest-name mb-0">n</h2>
+                                <h3 id="curry-type">Type</h3>
+                            </span>
+
+                            <div className="clear">
+                                Taste notes: <span id="taste-notes"></span>
+                                <br />
+                                Rating: <span id="rate"></span>/5
+                            </div>
                         </div>
                     </div>
-                    <br />
-                    Taste notes: <span id="taste-notes"></span>
-                    <br />
-                    Rating: <span id="rate"></span>/5
-
-
-                </div>
+                }
 
             </div>
         )

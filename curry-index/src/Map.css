@@ -17,13 +17,30 @@
     font-weight: 500;
 }
 
+#notice{
+    padding-top: 340px;
+}
+
 #selected-curry {
-    padding-top: 0%;
-    width: 50%;
+    padding-top: 30px;
 }
 
 #ranking {
     font-size: 58px;
     font-weight: 500;
     text-align: left;
+}
+
+.left-fl{
+    float: left;
+}
+
+.clear{
+    clear: left;
+    display: block;
+}
+
+.selected-curry-image {
+    width: 20%;
+    object-fit: cover;
 }

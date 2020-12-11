@@ -2,6 +2,7 @@
 // Making images work in react by src link without import?
 //    - need this to add custom images
 // Make maps update without manual refresh?
+// Upload image: https://dev.to/asimdahall/client-side-image-upload-in-react-5ffc
 
 // Modules
 import React, { Component } from "react";
@@ -10,6 +11,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import noodleheadRed from './noodlehead-red.jpg';
+import curryBowl from './currybowl.png';
 
 // CSS
 import './index.css';
@@ -32,46 +34,48 @@ function AddCurryModal(props) {
             <Form onSubmit={props.currySetter}>
                 <Modal.Body className="container-fluid">
                     <h2 className="mb-1">New Curry Entry</h2>
-                    <div className="sublabel">* Required field</div>
+                    <div className="sublabel req">* Required field</div>
                     <br />
                     {/* <div className="row"> */}
-                    {/* <div className="col-8"> */}
-                    <Form.Label id="restaurantName-label" className="mb-1">Restaurant*</Form.Label><br />
-                    <Form.Control size="sm" name="restaurantName" value="Name" type="text" placeholder="Name of Restaurant" />
-                    <br />
+                        {/* <div className="col-8"> */}
+                            <Form.Label id="restaurantName-label" className="mb-1">Restaurant*</Form.Label><br />
+                            <Form.Control autoComplete="off" size="sm" name="restaurantName" type="text" placeholder="Name of Restaurant" />
+                            <br />
 
-                    <Form.Label id="restaurantAddress-label" className="mb-1">Full Address of Restaurant*</Form.Label>
-                    <Form.Control size="sm" name="restaurantAddress" type="text" placeholder='e.g. "123 Thai St, Pittsburgh, PA"' />
-                    <br />
+                            <Form.Label id="restaurantAddress-label" className="mb-1">Full Address of Restaurant*</Form.Label>
+                            <br /><span className="sublabel">Can also write as "Restaurant name, City, State"</span>
+                            <Form.Control autoComplete="off" size="sm" name="restaurantAddress" type="text" placeholder='e.g. "123 Thai St, Pittsburgh, PA"' />
+                            <br />
 
-                    <div className="container p-0">
-                        <div className="row">
-                            <div className="col-8">
-                                <Form.Label id="curryType-label" className="mb-0">Curry Name*</Form.Label>
-                                <br /><span className="sublabel">Include "curry" in name</span>
-                                <Form.Control value="Red curry" size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
+                            <div className="container p-0">
+                                <div className="row">
+                                    <div className="col-8">
+                                        <Form.Label id="curryType-label" className="mb-0">Curry Name*</Form.Label>
+                                        <br /><span className="sublabel">Include "curry" in name</span>
+                                        <Form.Control autoComplete="off" size="sm" name="curryType" type="text" placeholder='e.g. "Red Curry"' />
+                                    </div>
+                                    <div className="col-4">
+                                        <Form.Label id="curryRating-label" className="mb-0">Rating*</Form.Label>
+                                        <br /><span className="sublabel">1=worst, 5=best</span>
+                                        <Form.Control autoComplete="off" size="sm" name="curryRating" type="text" placeholder="1-5" />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="col-4">
-                                <Form.Label id="curryRating-label" className="mb-0">Rating*</Form.Label>
-                                <br /><span className="sublabel">1=worst, 5=best</span>
-                                <Form.Control value="4" size="sm" name="curryRating" type="text" placeholder="1-5" />
-                            </div>
-                        </div>
-                    </div>
 
-                    <br />
-                    <Form.Label id="tastingNotes-label" className="mb-1">Taste Notes</Form.Label>
-                    <Form.Control as="textarea" name="tastingNotes" placeholder="Taste description of curry" rows={3} />
+                            <br />
+                            <Form.Label id="tastingNotes-label" className="mb-1">Taste Notes</Form.Label>
+                            <Form.Control as="textarea" name="tastingNotes" placeholder="Taste description of curry" rows={3} />
 
-                    {/* </div> */}
+                        {/* </div>
 
-                    {/* <div className="col-4">
+                        <div className="col-4">
                             <Form.Group>
                                 <Form.Label className="mb-1">Add a Photo</Form.Label>
-                                <Form.File name="curryPhoto" id="exampleFormControlFile1" />
+                                <Form.File multiple={false} onChange={props.handleImageUpload} name="curryPhoto" id="exampleFormControlFile1" />
                             </Form.Group>
-                        </div> */}
-                    {/* </div> */}
+                        </div>
+                    </div> */}
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="outline-secondary" size="sm" onClick={props.onHide}>Close</Button>
@@ -134,21 +138,30 @@ class App extends Component {
             newCurryContent: "",
             modalShow: false,
             curryFalling: false,
+            // uploadedImage: undefined
         };
     }
 
     renderCurryItem(restaurant, curryType, tastingNotes, rating, i) {
-        return <Curry restaurant={restaurant} curry={curryType} tastingNotes={tastingNotes} rating={rating} i={i} key={i} deleteItem={this.deleteItem} />;
+        return <Curry restaurant={restaurant} curry={curryType} tastingNotes={tastingNotes} rating={rating} i={i} key={i} deleteItem={this.deleteItem} />
     }
+
+    // handleImageUpload = (e) => {
+    //     const imgg = React.useRef(null);
+    //     this.setState({uploadedImage: imgg});
+    //     const [file] = e.target.files;
+    //     if (file) {
+    //       console.log(file);
+    //     }
+    // }
 
     addItem = (e) => {
         e.preventDefault();
         // Error checker: make sure all input values are filled (except excluded inputs if any)
         let excludedInputs = "tastingNotes";
-
         let error = false;
         // Go through each input field and make sure it's not empty
-        for (var i = 0; i < e.target.elements.length - 2; i++) {
+        for (var i = 0; i < e.target.elements.length - 3; i++) {
             if (e.target[i].value === "" && !excludedInputs.includes(e.target[i].name)) {
                 throwError(e.target[i].name);
                 error = true;
@@ -159,6 +172,7 @@ class App extends Component {
             }
         }
         if (error === true) {
+            document.getElementsByClassName("req")[0].style.color = "#dc3545";
             return null
         }
 
@@ -218,7 +232,7 @@ class App extends Component {
             <div id="bootstrap-overrides">
                 { this.state.curryFalling &&
                     <span className="falling-curry container">
-                        <span onAnimationEnd={() => this.setState({curryFalling: false})} className="fallingLeaves"></span>
+                        <span onAnimationEnd={() => this.setState({ curryFalling: false })} className="fallingLeaves"></span>
                         <span className="fallingLeaves"></span>
                         <span className="fallingLeaves"></span>
                         <span className="fallingLeaves"></span>
@@ -246,6 +260,7 @@ class App extends Component {
                     show={this.state.modalShow}
                     onHide={() => this.setModalShow(false)}
                     currySetter={this.addItem}
+                    // handleImageUpload={this.handleImageUpload}
                 />
             </div >
         );
