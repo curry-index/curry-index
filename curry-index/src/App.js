@@ -11,7 +11,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import noodleheadRed from './noodlehead-red.jpg';
-import curryBowl from './currybowl.png';
+// import curryBowl from './currybowl.png';
 
 // CSS
 import './index.css';
