@@ -66,7 +66,8 @@ class App extends Component {
             curryList: loaded_curryList || [],
             modalShow: false,
             curryFalling: false,
-            pictures: []
+            pictures: [],
+            noCurriesInIndex: true
         }
         this.onDrop = this.onDrop.bind(this);
     }
@@ -127,6 +128,8 @@ class App extends Component {
         // close modal
         this.setModalShow(false);
 
+        this.setState({noCurriesInIndex: false})
+
         // Start animation: Falling curry bowls
         this.setState({ curryFalling: true });
     };
@@ -137,6 +140,10 @@ class App extends Component {
         currCurryList.splice(i, 1);
         this.setState({ curryList: currCurryList });
         store(currCurryList);
+
+        if(this.state.curryList.length === 0){
+            this.setState({noCurriesInIndex: true})
+        }
     };
 
     setModalShow(bool) {
@@ -193,6 +200,9 @@ class App extends Component {
                 </div>
 
                 <div className="row">
+                    { this.state.noCurriesInIndex &&
+                    <h3 className="ml-3 mt-4">No curries in index. Start by clicking "+ Add New Curry"!</h3>
+                    }
                     {curriesInIndex}
                 </div>
                 <AddCurryModal
