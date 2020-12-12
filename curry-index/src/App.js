@@ -64,7 +64,6 @@ class App extends Component {
         this.state = {
             //Using || for backup assignment if no curryList in storage
             curryList: loaded_curryList || [],
-            newCurryContent: "",
             modalShow: false,
             curryFalling: false,
             pictures: []
